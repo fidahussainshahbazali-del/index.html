@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -124,7 +124,7 @@
     <div id="depModal" class="modal"><div class="modal-content">
         <h3>Add Money (PKR)</h3>
         <div style="background:#e8f5e9; padding:15px; border-radius:10px; font-size:14px; margin-bottom:10px;">
-            <b>EasyPaisa/FirstPay:</b> 03023032091 <br>
+            <b>EasyPaisa/FirstPay:</b> 03491281764 <br>
             <b>Title:</b> FIDA HUSSAIN
         </div>
         <input type="number" id="dAmt" placeholder="Amount Sent">
