@@ -9,38 +9,33 @@
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; user-select: none; }
 
         /* --- AUTH SCREEN --- */
-        #authScreen { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        #authScreen { position: fixed; inset: 0; background: white; z-index: 9999; display: flex; align-items: center; justify-content: center; }
         .card { background: white; width: 85%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 20px 50px rgba(0,0,0,0.15); text-align: center; }
         
         /* --- DASHBOARD --- */
         #dashboard { display: none; }
-        header { background: var(--main); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        header { background: var(--main); color: white; padding: 20px; text-align: center; border-bottom: 4px solid var(--gold); font-weight: bold; position: sticky; top: 0; z-index: 100; }
         
-        .wallet-box { background: linear-gradient(135deg, #004d40, #00695c); color: white; margin: 20px; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 20px rgba(0,77,64,0.3); }
-        .balance { font-size: 42px; font-weight: 800; margin: 10px 0; color: var(--gold); text-shadow: 1px 1px 2px black; }
+        .wallet-box { background: linear-gradient(135deg, #004d40, #00695c); color: white; margin: 15px; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; }
+        .balance { font-size: 42px; font-weight: 800; margin: 10px 0; color: var(--gold); }
+        .admin-trigger { position: absolute; top: 5px; right: 10px; font-size: 10px; opacity: 0.4; cursor: pointer; color: white; }
 
         /* --- 9 TOOLS GRID --- */
-        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 20px; }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 15px; margin-bottom: 100px; }
         .tool-btn { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05); transition: 0.3s; border: 2px solid transparent; cursor: pointer; }
-        .tool-btn:hover { border-color: var(--main); transform: translateY(-5px); }
-        .tool-icon { font-size: 30px; margin-bottom: 10px; display: block; }
+        .tool-btn:active { transform: scale(0.95); background: #f0f0f0; }
+        .tool-icon { font-size: 35px; margin-bottom: 8px; display: block; }
         .tool-name { font-weight: bold; color: #333; font-size: 14px; }
 
         /* --- POPUP WINDOWS --- */
         .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 10000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
-        .modal-content { background: white; width: 100%; max-width: 450px; border-radius: 20px; padding: 25px; animation: slideUp 0.3s ease; position: relative; }
-        @keyframes slideUp { from {transform: translateY(50px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+        .modal-content { background: white; width: 100%; max-width: 450px; border-radius: 20px; padding: 25px; position: relative; max-height: 80vh; overflow-y: auto; }
 
-        /* --- FORM ELEMENTS --- */
-        select, input { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; transition: 0.3s; }
-        select:focus, input:focus { border-color: var(--main); box-shadow: 0 0 0 3px rgba(0,77,64,0.1); }
+        input, select { width: 100%; padding: 15px; margin: 10px 0; border: 1px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; outline: none; }
+        .action-btn { width: 100%; padding: 16px; background: var(--main); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .close-btn { background: #eee; color: #555; margin-top: 10px; }
         
-        .price-display { background: #e0f2f1; color: var(--main); padding: 15px; border-radius: 10px; font-weight: bold; margin-bottom: 15px; display: flex; justify-content: space-between; }
-        
-        .action-btn { width: 100%; padding: 16px; background: var(--main); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; }
-        .close-btn { background: #f5f5f5; color: #555; margin-top: 10px; }
-        
-        /* WHATSAPP BUTTON UPDATED */
+        /* WhatsApp Button (03443744818) */
         .whatsapp-float { position: fixed; bottom: 25px; left: 25px; cursor: pointer; z-index: 200; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
     </style>
@@ -53,186 +48,192 @@
 
     <div id="authScreen">
         <div class="card" id="loginStep">
-            <h1 style="color:var(--main); margin:0;">FJ ENTERPRISE</h1>
-            <p style="color:#666;">Secure Business Terminal</p>
-            <input type="text" id="userName" placeholder="Full Name">
-            <input type="tel" id="userPhone" placeholder="Mobile Number (03...)">
-            <button class="action-btn" onclick="sendOTP()">SEND CODE</button>
+            <h1 style="color:var(--main)">FJ REGISTER</h1>
+            <p>Secure Business Node</p>
+            <input type="text" id="regName" placeholder="Full Name">
+            <input type="tel" id="regPhone" placeholder="Mobile Number">
+            <button class="action-btn" onclick="sendOTP()">SEND OTP CODE</button>
         </div>
-
         <div class="card" id="otpStep" style="display:none;">
-            <h2 style="color:var(--main)">VERIFICATION</h2>
-            <p id="otpMessage" style="background:#fff3cd; padding:10px; border-radius:8px; color:#856404; font-weight:bold;"></p>
-            <input type="number" id="otpInput" placeholder="Enter 4-Digit Code">
-            <button class="action-btn" onclick="verifyOTP()">LOGIN DASHBOARD</button>
+            <h2>VERIFY OTP</h2>
+            <p id="otpMsg" style="background:#fff3cd; padding:10px; font-weight:bold; border-radius:8px;"></p>
+            <input type="number" id="otpIn" placeholder="Enter 4-Digit Code">
+            <button class="action-btn" onclick="completeLogin()">START DASHBOARD</button>
         </div>
     </div>
 
     <div id="dashboard">
         <header>FJ GLOBAL TERMINAL</header>
-
         <div class="wallet-box">
-            <span>Total Available Balance</span>
-            <div class="balance">Rs. 0.00</div>
-            <button class="action-btn" style="background:var(--green); border:none;" onclick="openModal('depositModal')">+ ADD FUNDS</button>
+            <div class="admin-trigger" onclick="adminControl()">SERVER ID: 2B87AR 🔒</div>
+            <div id="userNameTxt" style="font-size: 14px; opacity: 0.9;">Welcome</div>
+            <div id="userBal" class="balance">Rs. 0.00</div>
+            <button class="action-btn" style="background:var(--green); width:auto; padding:10px 30px;" onclick="openModal('depModal')">ADD FUNDS</button>
         </div>
 
         <div class="grid-container">
             <div class="tool-btn" onclick="openModal('ytModal')"><span class="tool-icon">📺</span><span class="tool-name">YouTube</span></div>
             <div class="tool-btn" onclick="openModal('ttModal')"><span class="tool-icon">🎵</span><span class="tool-name">TikTok</span></div>
             <div class="tool-btn" onclick="openModal('fbModal')"><span class="tool-icon">💙</span><span class="tool-name">Facebook</span></div>
-            <div class="tool-btn" onclick="openModal('gameModal')"><span class="tool-icon">🎮</span><span class="tool-name">Gaming Hub</span></div>
-            <div class="tool-btn" onclick="openModal('depositModal')"><span class="tool-icon">🟢</span><span class="tool-name">EasyPaisa</span></div>
-            <div class="tool-btn" onclick="openModal('depositModal')"><span class="tool-icon">💳</span><span class="tool-name">FirstPay</span></div>
-            <div class="tool-btn" onclick="openModal('cloudModal')"><span class="tool-icon">☁️</span><span class="tool-name">Cloud Data</span></div>
-            <div class="tool-btn" onclick="openModal('globalModal')"><span class="tool-icon">🌍</span><span class="tool-name">Global Biz</span></div>
-            <div class="tool-btn" style="border-color:red" onclick="location.reload()"><span class="tool-icon">🚪</span><span class="tool-name">LOGOUT</span></div>
+            <div class="tool-btn" onclick="openModal('gmModal')"><span class="tool-icon">🎮</span><span class="tool-name">Gaming Hub</span></div>
+            <div class="tool-btn" onclick="openModal('depModal')"><span class="tool-icon">🟢</span><span class="tool-name">EasyPaisa</span></div>
+            <div class="tool-btn" onclick="openModal('depModal')"><span class="tool-icon">💳</span><span class="tool-name">FirstPay</span></div>
+            <div class="tool-btn" onclick="openModal('clModal')"><span class="tool-icon">☁️</span><span class="tool-name">Cloud Data</span></div>
+            <div class="tool-btn" onclick="openModal('gbModal')"><span class="tool-icon">🌍</span><span class="tool-name">Global Biz</span></div>
+            <div class="tool-btn" style="border-color:red" onclick="logout()"><span class="tool-icon">🚪</span><span class="tool-name" style="color:red">Logout</span></div>
         </div>
     </div>
 
     <div id="ytModal" class="modal"><div class="modal-content">
-        <h3>📺 YouTube Services</h3>
-        <select id="ytSelect" onchange="updatePrice('yt')">
-            <option value="1000">1,000 Subscribers (Non-Drop)</option>
-            <option value="4000">4,000 Watch Hours (Monetization)</option>
-            <option value="500">1,000 Real Likes</option>
-            <option value="2500">10,000 High Retention Views</option>
-        </select>
-        <div class="price-display"><span>Price:</span> <span id="ytPrice">Rs. 1000</span></div>
-        <input type="text" placeholder="Paste Channel/Video Link">
-        <button class="action-btn" onclick="placeOrder('YouTube')">START ORDER</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
-    </div></div>
-
-    <div id="gameModal" class="modal"><div class="modal-content">
-        <h3>🎮 Gaming Top-up</h3>
-        <select id="gameSelect" onchange="updatePrice('game')">
-            <option value="240">PUBG Mobile - 60 UC</option>
-            <option value="1250">PUBG Mobile - 325 UC</option>
-            <option value="2500">PUBG Mobile - 660 UC</option>
-            <option value="190">FreeFire - 100 Diamonds</option>
-            <option value="950">FreeFire - 520 Diamonds</option>
-            <option value="4500">FreeFire - Weekly Membership</option>
-        </select>
-        <div class="price-display"><span>Cost:</span> <span id="gamePrice">Rs. 240</span></div>
-        <input type="text" placeholder="Enter Player ID (UID)">
-        <input type="text" placeholder="Enter Player Name">
-        <button class="action-btn" onclick="placeOrder('Gaming')">SEND UC/DIAMONDS</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
-    </div></div>
-
-    <div id="fbModal" class="modal"><div class="modal-content">
-        <h3>💙 Facebook Growth</h3>
-        <select id="fbSelect" onchange="updatePrice('fb')">
-            <option value="800">Page Likes (1k)</option>
-            <option value="600">Profile Followers (1k)</option>
-            <option value="400">Post Shares (1k)</option>
-            <option value="300">Video Views (10k)</option>
-        </select>
-        <div class="price-display"><span>Price:</span> <span id="fbPrice">Rs. 800</span></div>
-        <input type="text" placeholder="Paste Facebook Link">
-        <button class="action-btn" onclick="placeOrder('Facebook')">BOOST NOW</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
+        <h3>YouTube Services</h3>
+        <select id="ytType"><option value="1000">1k Subscribers (Rs. 1000)</option><option value="4000">4k WatchTime (Rs. 4000)</option><option value="500">1k Likes (Rs. 500)</option></select>
+        <input type="text" placeholder="Channel/Video URL">
+        <button class="action-btn" onclick="placeOrder('YouTube', document.getElementById('ytType').value)">PLACE ORDER</button>
+        <button class="action-btn close-btn" onclick="closeModal()">CLOSE</button>
     </div></div>
 
     <div id="ttModal" class="modal"><div class="modal-content">
-        <h3>🎵 TikTok Viral</h3>
-        <select id="ttSelect" onchange="updatePrice('tt')">
-            <option value="450">1,000 Followers</option>
-            <option value="300">1,000 Real Likes</option>
-            <option value="200">10,000 Views</option>
-        </select>
-        <div class="price-display"><span>Price:</span> <span id="ttPrice">Rs. 450</span></div>
-        <input type="text" placeholder="TikTok Profile/Video Link">
-        <button class="action-btn" onclick="placeOrder('TikTok')">VIRAL NOW</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
+        <h3>TikTok Viral</h3>
+        <select id="ttType"><option value="450">1k Followers (Rs. 450)</option><option value="300">1k Likes (Rs. 300)</option></select>
+        <input type="text" placeholder="Video Link">
+        <button class="action-btn" onclick="placeOrder('TikTok', document.getElementById('ttType').value)">PLACE ORDER</button>
+        <button class="action-btn close-btn" onclick="closeModal()">CLOSE</button>
     </div></div>
 
-    <div id="depositModal" class="modal"><div class="modal-content">
-        <h3>💰 Add Funds</h3>
-        <div style="background:#e8f5e9; padding:15px; border-radius:10px; margin-bottom:15px; text-align:left; font-size:14px; line-height:1.6;">
-            <strong>EasyPaisa:</strong> <span style="color:var(--main)">03023032091</span><br>
-            <strong>FirstPay:</strong> <span style="color:var(--main)">03023032091</span><br>
-            <strong>Title:</strong> FIDA HUSSAIN<br>
-            <small>Send payment and enter TID below.</small>
+    <div id="fbModal" class="modal"><div class="modal-content">
+        <h3>Facebook Growth</h3>
+        <select id="fbType"><option value="800">1k Page Likes (Rs. 800)</option><option value="600">1k Followers (Rs. 600)</option></select>
+        <input type="text" placeholder="Facebook Link">
+        <button class="action-btn" onclick="placeOrder('Facebook', document.getElementById('fbType').value)">PLACE ORDER</button>
+        <button class="action-btn close-btn" onclick="closeModal()">CLOSE</button>
+    </div></div>
+
+    <div id="gmModal" class="modal"><div class="modal-content">
+        <h3>Gaming Top-Up</h3>
+        <select id="gmType">
+            <option value="240">PUBG 60 UC (Rs. 240)</option>
+            <option value="1250">PUBG 325 UC (Rs. 1250)</option>
+            <option value="190">FF 100 Gems (Rs. 190)</option>
+            <option value="950">FF 530 Gems (Rs. 950)</option>
+        </select>
+        <input type="text" placeholder="Player UID">
+        <button class="action-btn" onclick="placeOrder('Gaming', document.getElementById('gmType').value)">BUY NOW</button>
+        <button class="action-btn close-btn" onclick="closeModal()">CLOSE</button>
+    </div></div>
+
+    <div id="depModal" class="modal"><div class="modal-content">
+        <h3>Add Money (PKR)</h3>
+        <div style="background:#e8f5e9; padding:15px; border-radius:10px; font-size:14px; margin-bottom:10px;">
+            <b>EasyPaisa/FirstPay:</b> 03023032091 <br>
+            <b>Title:</b> FIDA HUSSAIN
         </div>
-        <input type="number" placeholder="Amount (PKR)">
-        <input type="text" placeholder="Transaction ID (TID)">
-        <button class="action-btn" onclick="placeOrder('Deposit')">VERIFY PAYMENT</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
+        <input type="number" id="dAmt" placeholder="Amount Sent">
+        <input type="text" id="dTid" placeholder="Transaction TID">
+        <button class="action-btn" style="background:var(--green)" onclick="manualDeposit()">SUBMIT FOR APPROVAL</button>
+        <button class="action-btn close-btn" onclick="closeModal()">CANCEL</button>
     </div></div>
 
-    <div id="cloudModal" class="modal"><div class="modal-content">
-        <h3>☁️ Cloud Storage</h3>
-        <p>Secure Encrypted Storage (10GB)</p>
-        <input type="file" style="background:#f9f9f9; padding:10px;">
-        <button class="action-btn" onclick="placeOrder('Cloud Upload')">UPLOAD FILE</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
-    </div></div>
-
-    <div id="globalModal" class="modal"><div class="modal-content">
-        <h3>🌍 Global Business</h3>
-        <select>
-            <option>UK Ltd Company - Rs. 5000</option>
-            <option>USA LLC Reg - Rs. 25000</option>
-        </select>
-        <button class="action-btn" onclick="placeOrder('Global Biz')">CONTACT SUPPORT</button>
-        <button class="action-btn close-btn" onclick="closeModals()">CLOSE</button>
-    </div></div>
+    <div id="clModal" class="modal"><div class="modal-content"><h3>Cloud Storage</h3><input type="file"><button class="action-btn" onclick="alert('Saved to Secure Key!')">UPLOAD</button><button class="action-btn close-btn" onclick="closeModal()">CLOSE</button></div></div>
+    <div id="gbModal" class="modal"><div class="modal-content"><h3>Global Biz</h3><button class="action-btn">CONSULT FJ TEAM</button><button class="action-btn close-btn" onclick="closeModal()">CLOSE</button></div></div>
 
     <script>
-        let generatedOTP;
+        // --- MASTER DATA KEY ---
+        const MASTER_KEY = "AhZ6bG1-ZmlkYS1odXNzYWluLTJiODdhchYLEgpEYXRhIHNhdmUgIgZFcmFpbmcM";
+        let tempOTP;
+
+        // Auto-Load on Refresh
+        window.onload = function() {
+            const data = localStorage.getItem(MASTER_KEY);
+            if(data) {
+                showDashboard(JSON.parse(data));
+            }
+        };
 
         // 1. Auth System
         function sendOTP() {
-            const name = document.getElementById('userName').value;
-            const phone = document.getElementById('userPhone').value;
-            if(!name || !phone) return alert("Please enter Name and Phone!");
+            const name = document.getElementById('regName').value;
+            const phone = document.getElementById('regPhone').value;
+            if(!name || !phone) return alert("Please fill all details!");
 
-            generatedOTP = Math.floor(1000 + Math.random() * 9000); // Random 4-digit code
-            
+            tempOTP = Math.floor(1000 + Math.random() * 9000);
             document.getElementById('loginStep').style.display = 'none';
             document.getElementById('otpStep').style.display = 'block';
-            document.getElementById('otpMessage').innerHTML = `Server Message:<br>Your OTP Code is: <strong>${generatedOTP}</strong>`;
+            document.getElementById('otpMsg').innerText = "Server OTP: " + tempOTP;
         }
 
-        function verifyOTP() {
-            const input = document.getElementById('otpInput').value;
-            if(input == generatedOTP) {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
+        function completeLogin() {
+            if(document.getElementById('otpIn').value == tempOTP) {
+                const user = {
+                    name: document.getElementById('regName').value,
+                    phone: document.getElementById('regPhone').value,
+                    balance: 0
+                };
+                localStorage.setItem(MASTER_KEY, JSON.stringify(user));
+                showDashboard(user);
+            } else { alert("Wrong OTP Code!"); }
+        }
+
+        function showDashboard(user) {
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('userNameTxt').innerText = "Account: " + user.name;
+            updateBalanceUI(user.balance);
+        }
+
+        function updateBalanceUI(b) {
+            document.getElementById('userBal').innerText = "Rs. " + b.toFixed(2);
+        }
+
+        // 2. Manual Deposit Logic (No Auto-Add)
+        function manualDeposit() {
+            const amt = document.getElementById('dAmt').value;
+            const tid = document.getElementById('dTid').value;
+            const name = JSON.parse(localStorage.getItem(MASTER_KEY)).name;
+            
+            if(!amt || !tid) return alert("Enter Amount & TID");
+
+            const msg = `DEPOSIT ALERT:\nUser: ${name}\nAmount: Rs. ${amt}\nTID: ${tid}`;
+            window.open(`https://wa.me/923443744818?text=${encodeURIComponent(msg)}`);
+            
+            alert("✅ Request Sent!\nBalance will be added manually after Fida Hussain verifies the payment.");
+            closeModal();
+        }
+
+        // 3. Admin Control (How you add money)
+        function adminControl() {
+            let pass = prompt("Enter Admin Password:");
+            if(pass === "fida786") {
+                let amount = parseInt(prompt("How much balance to add?"));
+                if(!isNaN(amount)) {
+                    let user = JSON.parse(localStorage.getItem(MASTER_KEY));
+                    user.balance += amount;
+                    localStorage.setItem(MASTER_KEY, JSON.stringify(user));
+                    updateBalanceUI(user.balance);
+                    alert("✅ Balance Added Successfully!");
+                }
+            } else { alert("Access Denied!"); }
+        }
+
+        // 4. Order Logic
+        function placeOrder(type, cost) {
+            cost = parseInt(cost);
+            let user = JSON.parse(localStorage.getItem(MASTER_KEY));
+            
+            if(user.balance >= cost) {
+                user.balance -= cost;
+                localStorage.setItem(MASTER_KEY, JSON.stringify(user));
+                updateBalanceUI(user.balance);
+                alert("🚀 Order Placed Successfully for " + type);
+                closeModal();
             } else {
-                alert("Wrong Code! Please try again.");
+                alert("❌ Low Balance! Please contact Fida Hussain for deposit.");
             }
         }
 
-        // 2. Dynamic Price System
-        function updatePrice(service) {
-            if(service === 'yt') {
-                const val = document.getElementById('ytSelect').value;
-                document.getElementById('ytPrice').innerText = "Rs. " + val;
-            } else if(service === 'game') {
-                const val = document.getElementById('gameSelect').value;
-                document.getElementById('gamePrice').innerText = "Rs. " + val;
-            } else if(service === 'fb') {
-                const val = document.getElementById('fbSelect').value;
-                document.getElementById('fbPrice').innerText = "Rs. " + val;
-            } else if(service === 'tt') {
-                const val = document.getElementById('ttSelect').value;
-                document.getElementById('ttPrice').innerText = "Rs. " + val;
-            }
-        }
-
-        // 3. Modal Controls
+        // Helpers
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModals() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
-
-        // 4. Order System
-        function placeOrder(type) {
-            alert("✅ SUCCESS!\n" + type + " Request Submitted.\nSyncing with Server...");
-            closeModals();
-        }
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = 'none'); }
+        function logout() { localStorage.removeItem(MASTER_KEY); location.reload(); }
     </script>
 </body>
 </html>
-
